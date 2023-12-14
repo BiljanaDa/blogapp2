@@ -1,9 +1,6 @@
 @extends('layout.default')
 
 @section('content')
-    @extends('layout.default')
-
-@section('content')
     <main class="form-signin w-100 m-auto">
 
         <form method="POST" action="{{ url('/login') }}">
@@ -24,4 +21,4 @@
     </main>
 @endsection
 
-@endsection
+

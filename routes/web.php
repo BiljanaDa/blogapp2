@@ -32,4 +32,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::post('/createcomment', [CommentsController::class, 'store']);
+Route::get('/deletecomment/{id}', [CommentsController::class, 'destroy']);
 

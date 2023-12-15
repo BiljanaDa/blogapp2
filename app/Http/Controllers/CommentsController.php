@@ -25,7 +25,7 @@ class CommentsController extends Controller
     public function store(CreateCommentRequest $request)
     {
         if(!Auth::check()) {
-            return redirect('/posts/' . $request->post_id)->withErrors('Only authenticated user can post comments');
+            return redirect('/posts/' . $request->post_id)->withErrors('Only logged in users can create comments.');
         }
 
         $post = Post::find($request->post_id);
@@ -64,6 +64,15 @@ class CommentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $comment = Comment::find($id);
+
+        if (Auth::id() !== $comment->user_id) {
+            return redirect()->back()->withErrors('Only creator of the comment can delete comment.');
+        }
+        
+        $comment->destroy($id);
+
+        return redirect()->back()->with('success', 'Comment is successfully deleted.');
     }
 }

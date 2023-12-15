@@ -3,7 +3,7 @@
 @section('content')
     <main class="form-signin w-100 m-auto">
 
-        <form method="POST" action="{{ url('/register') }}">
+        <form method="POST" action="{{ url('/auth') }}">
             @csrf
             <h1 class="h3 mb-3 fw-normal">Please register</h1>
             <div class="form-floating mb-4">

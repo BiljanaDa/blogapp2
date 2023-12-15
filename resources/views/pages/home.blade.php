@@ -15,7 +15,13 @@
             <svg class="bi mt-5 mb-3" width="48" height="48">
                 <use xlink:href="#check2-circle" />
             </svg>
-            <h1 class="text-body-emphasis">Welcome to Vivify blog</h1>
+            <h1 class="text-body-emphasis">Welcome
+                @if (auth()->user())
+                    {{ auth()->user()->name }}
+                @else
+                    Guest
+                @endif
+            </h1>
             <p class="col-lg-6 mx-auto mb-4">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati maiores accusamus, quia numquam impedit
                 harum nostrum, ullam nobis perspiciatis odit sapiente doloremque nihil quasi voluptate alias cum commodi

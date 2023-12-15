@@ -14,15 +14,17 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
+
         return view('pages.auth.login');
     }
 
     public function showRegister()
     {
+
         return view('pages.auth.register');
     }
 
-    public function register(RegisterRequest $request)
+    public function store(RegisterRequest $request)
     {
         User::create([
             'name' => $request->name,
@@ -33,7 +35,7 @@ class AuthController extends Controller
         return redirect('/login')->with('status', 'Succesfully created account');
     }
 
-    public function login(LoginRequest $request)
+    public function index(LoginRequest $request)
     {
         if (Auth::check()) {
             return redirect('/login')->withErrors('You are already login');
@@ -48,7 +50,7 @@ class AuthController extends Controller
 
     }
 
-    public function logout()
+    public function destroy()
     {
         Session::flush();
         Auth::logout();

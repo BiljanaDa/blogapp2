@@ -3,7 +3,7 @@
 @section('content')
     <main class="form-signin w-100 m-auto">
 
-        <form method="POST" action="{{ url('/login') }}">
+        <form method="GET" action="{{ url('/auth') }}">
             @csrf
             <h1 class="h3 mb-3 fw-normal">Please login</h1>
             <div class="form-floating mb-4">
@@ -20,5 +20,3 @@
         @include('components.errors')
     </main>
 @endsection
-
-

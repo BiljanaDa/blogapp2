@@ -19,11 +19,11 @@ class CreateCommentRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
-        return [
-            'body' => 'required|min:2|max:2000|string',
-            'post_id' => 'required|exists:posts,id',
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     // return [
+    //     //     'body' => 'required|min:2|max:2000|string',
+    //     //     'post_id' => 'required|exists:posts,id',
+    //     // ];
+    // }
 }

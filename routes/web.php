@@ -24,6 +24,7 @@ Route::get('/', function () {
 Route::resource('/posts', 'App\Http\Controllers\PostsController');
 Route::resource('/auth', 'App\Http\Controllers\AuthController');
 Route::resource('/tags', 'App\Http\Controllers\TagController');
+Route::resource('comments', 'App\Http\Controllers\CommentController');
 
 Route::middleware('notauthentificated')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin']);
@@ -33,6 +34,7 @@ Route::middleware('notauthentificated')->group(function () {
 Route::middleware('authentificate')->group(function () {
     Route::get('/logout', [AuthController::class, 'destroy']);
     Route::get('/createpost', [PostsController::class, 'createPost']);
+    Route::post('/editcomment', [CommentsController::class, 'update']);
 });
 
 
@@ -41,4 +43,5 @@ Route::middleware('authentificate')->group(function () {
 
 Route::post('/createcomment', [CommentsController::class, 'store']);
 Route::get('/deletecomment/{id}', [CommentsController::class, 'destroy']);
+
 

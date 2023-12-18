@@ -25,7 +25,7 @@
                     </div>
                     @if(Auth::check() && $post->user_id === Auth::id())
                         <div class="card-footer">
-                            <form method="POST" action="{{ route('posts.update', ['id' => $post->id]) }}">
+                            <form method="POST" action="/posts/{{ $post->id }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">

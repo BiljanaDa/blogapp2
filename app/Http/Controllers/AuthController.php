@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Mail\CreateRegistrationMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -26,13 +28,17 @@ class AuthController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect('/login')->with('status', 'Succesfully created account');
+
+        $userEmail = $user->email;
+        Mail::to($userEmail)->send(new CreateRegistrationMail('user_id'));
+
+        return redirect('/login')->with('status', 'Succesfully registration');
     }
 
     public function index(LoginRequest $request)

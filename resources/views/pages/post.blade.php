@@ -8,10 +8,10 @@
     <div class="container text-align">
         <h1>{{ $post->title }}</h1>
         @if ($post->user)
-        <h4>{{ $post->user->name }}</h4>
-        @else
-        <h4>Unknown User</h4>
-        @endif
+        <p>Author: {{ $post->user->name }}</p>
+    @else
+        <p>Author: Unknown</p>
+    @endif
         <p>{{ $post->body }}</p>
 
         @foreach ($post->tags as $tag)

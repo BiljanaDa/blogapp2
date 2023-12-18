@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -23,11 +24,12 @@ class PostsController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
+        $post = new Post();
 
-        $post = Post::create([
-            'title' => $request->title,
-            'body' => $request->body
-        ]);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = Auth::id();
+        $post->save();
 
         $post->tags()->attach($request->tags);
 

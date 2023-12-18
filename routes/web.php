@@ -43,6 +43,6 @@ Route::middleware('authentificate')->group(function () {
 
 Route::post('/createcomment', [CommentsController::class, 'store']);
 Route::get('/deletecomment/{id}', [CommentsController::class, 'destroy']);
-// Route::put('/editpost/{id}', [PostsController::class, 'update'])->name('posts.update');
+Route::put('/posts/{id}', [PostsController::class, 'update'])->name('posts.update');
 
 

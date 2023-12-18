@@ -50,7 +50,18 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::find($id);
+
+        if ($post->user_id !== Auth::id()) {
+            return redirect()->back()->withError('Only creator of the post can change it.');
+        }
+    
+        $post->title = $request->title;
+        $post->body = $request->body;
+    
+        $post->save();
+
+    return redirect()->back()->with('status', 'Post successfully updated.');
     }
 
     /**

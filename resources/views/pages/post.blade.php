@@ -19,11 +19,12 @@
                         <h4>Tags:</h4>
                         <div class="tags">
                             @foreach ($post->tags as $tag)
-                                <a href="/tags/{{ $tag->name }}" class="badge rounded-pill text-bg-secondary">{{ $tag->name }}</a>
+                                <a href="/tags/{{ $tag->name }}"
+                                    class="badge rounded-pill text-bg-secondary">{{ $tag->name }}</a>
                             @endforeach
                         </div>
                     </div>
-                    @if(Auth::check() && $post->user_id === Auth::id())
+                    @if (Auth::check() && $post->user_id === Auth::id())
                         <div class="card-footer">
                             <form method="POST" action="/posts/{{ $post->id }}">
                                 @csrf
@@ -47,7 +48,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-         
+
                 @include('components.comment')
                 @include('components.createcomment')
                 @include('components.errors')
@@ -55,4 +56,3 @@
         </div>
     </div>
 @endsection
-

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Mail\CreatePostMail;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PostsController extends Controller
 {
@@ -33,6 +35,10 @@ class PostsController extends Controller
 
         $post->tags()->attach($request->tags);
 
+        $userEmail = Auth::user()->email;
+        $mailData = $post->only('title', 'body');
+        Mail::to($userEmail)->send(new CreatePostMail($mailData));
+
         return redirect('createpost')->with('status', 'Post successfully created.');
     }
 
@@ -55,13 +61,13 @@ class PostsController extends Controller
         if ($post->user_id !== Auth::id()) {
             return redirect()->back()->withError('Only creator of the post can change it.');
         }
-    
+
         $post->title = $request->title;
         $post->body = $request->body;
-    
+
         $post->save();
 
-    return redirect()->back()->with('status', 'Post successfully updated.');
+        return redirect()->back()->with('status', 'Post successfully updated.');
     }
 
     /**

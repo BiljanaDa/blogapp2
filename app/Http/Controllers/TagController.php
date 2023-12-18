@@ -28,7 +28,7 @@ class TagController extends Controller
      */
     public function show(string $tagName)
     {
-        $posts = Tag::where('name', $tagName)->first()->posts()->get();
+        $posts = Tag::where('name', $tagName)->first()->posts()->paginate(3);
         return view('pages.posts', compact('posts'));
     }
 

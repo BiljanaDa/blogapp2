@@ -68,13 +68,13 @@ class AuthController extends Controller
         return redirect('/')->with('status', 'Logged out');
     }
 
-    // public function verify(string $string)
-    // {
-    //     $user = User::where('verify_string', $string)->first();
-    //     if (!$user->email_verified_at) {
-    //         $user->email_verified_at = now();
-    //         $user->save();
-    //     }
-    //     return redirect('/login')->with('status', 'Succesfully verified');
-    // }
+    public function verify(string $string)
+    {
+        $user = User::where('verify_string', $string)->first();
+        if (!$user->email_verified_at) {
+            $user->email_verified_at = now();
+            $user->save();
+        }
+        return redirect('/login')->with('status', 'Succesfully verified');
+    }
 }

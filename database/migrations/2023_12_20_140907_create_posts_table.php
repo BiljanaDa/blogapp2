@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('body');
             $table->boolean('isPublished')->default(true);
             $table->foreignId('user_id')->constrained('users');
-            $table->timestamps();
+            $table->timestamps();;
         });
     }
 

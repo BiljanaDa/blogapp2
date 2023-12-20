@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +30,14 @@ Route::resource('comments', 'App\Http\Controllers\CommentController');
 Route::middleware('notauthentificated')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin']);
     Route::get('/register', [AuthController::class, 'showRegister']);
+    Route::get('/verify/{verify_string}', [AuthController::class, 'verify']);
 });
 
 Route::middleware('authentificate')->group(function () {
     Route::get('/logout', [AuthController::class, 'destroy']);
     Route::get('/createpost', [PostsController::class, 'createPost']);
     Route::post('/editcomment', [CommentsController::class, 'update']);
+    Route::get('/like/{post_id}/{type}', [LikesController::class, 'like']);
 });
 
 

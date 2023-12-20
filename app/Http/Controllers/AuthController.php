@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\CreateRegistrationMail;
+use App\Mail\VerifyUserMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -35,8 +37,10 @@ class AuthController extends Controller
         ]);
 
 
-        $userEmail = $user->email;
-        Mail::to($userEmail)->send(new CreateRegistrationMail('user_id'));
+        $user->verify_string = Str::uuid()->toString();
+        $user->save();
+        $mailData = $user->only('email', 'verify_string');
+        Mail::to($user->email)->send(new VerifyUserMail($mailData));
 
         return redirect('/login')->with('status', 'Succesfully registration');
     }
@@ -63,4 +67,14 @@ class AuthController extends Controller
 
         return redirect('/')->with('status', 'Logged out');
     }
+
+    // public function verify(string $string)
+    // {
+    //     $user = User::where('verify_string', $string)->first();
+    //     if (!$user->email_verified_at) {
+    //         $user->email_verified_at = now();
+    //         $user->save();
+    //     }
+    //     return redirect('/login')->with('status', 'Succesfully verified');
+    // }
 }

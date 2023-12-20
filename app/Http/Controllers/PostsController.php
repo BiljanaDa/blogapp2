@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Mail\CreatePostMail;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class PostsController extends Controller
         $post->tags()->attach($request->tags);
 
         $userEmail = Auth::user()->email;
-        $mailData = $post->only('title', 'body');
+        $mailData = $post->only('title', 'body', 'id');
         Mail::to($userEmail)->send(new CreatePostMail($mailData));
 
         return redirect('createpost')->with('status', 'Post successfully created.');
@@ -48,7 +49,10 @@ class PostsController extends Controller
     public function show(string $id)
     {
         $post = Post::with('comments')->find($id);
-        return view('pages.post', compact('post'));
+        $comments = Comment::where('post_id', $id)->get();
+        $likes = $post->likes()->where('type', 'like')->count();
+        $dislikes = $post->likes()->where('type', 'dislike')->count();
+        return view('pages.post', compact('post', 'comments', 'likes', 'dislikes'));
     }
 
     /**

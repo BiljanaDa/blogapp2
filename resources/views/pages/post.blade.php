@@ -23,6 +23,11 @@
                                     class="badge rounded-pill text-bg-secondary">{{ $tag->name }}</a>
                             @endforeach
                         </div>
+                        <h6>Likes: {{ $likes }}</h6>
+                        <h6>Dislikes: {{ $dislikes }}</h6>
+                        @if (auth()->user())
+                            @include('components.like-dislike')
+                        @endif
                     </div>
                     @if (Auth::check() && $post->user_id === Auth::id())
                         <div class="card-footer">
